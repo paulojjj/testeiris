@@ -36,6 +36,8 @@ public class HibernateDialectResolver implements DialectResolver {
 		ORACLE(Oracle10gDialect.class, "Oracle"),
 		POSTGRES(PostgreSQL9Dialect.class, "POSTGRESQL"),
 		SQL_SERVER(SQLServer2012Dialect.class, "Microsoft SQL Server"),
+		//org.hibernate.dialect.InterSystemsIRISDialect
+		IRIS(Cache71Dialect.class, "IRIS"),
 		CACHE(new CacheDialectResolver());
 		
 		private DialectResolver dialectResolver;
@@ -194,8 +196,9 @@ public class HibernateDialectResolver implements DialectResolver {
 				return dialect;
 			}
 		}
+		HibernateDialectResolver.dialect = new Cache71Dialect();
 		logger.severe("Não foi possível determinar o dialeto do Hibernate");
-		return null;
+		return HibernateDialectResolver.dialect;
 	}
 
 }

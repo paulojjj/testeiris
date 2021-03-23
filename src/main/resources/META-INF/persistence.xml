@@ -8,6 +8,9 @@
 	<persistence-unit name="testeiris" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/testeiris</jta-data-source>
 		<properties>
+		<!-- 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Cache71Dialect" />
+		 -->
 			<property name="hibernate.dialect_resolvers" value="br.jus.tjse.config.HibernateDialectResolver" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>
