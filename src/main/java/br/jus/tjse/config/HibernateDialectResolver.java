@@ -196,7 +196,11 @@ public class HibernateDialectResolver implements DialectResolver {
 				return dialect;
 			}
 		}
-		HibernateDialectResolver.dialect = new Cache71Dialect();
+		try {
+			HibernateDialectResolver.dialect = (Dialect)Class.forName("br.jus.tjse.dialect.CacheDialect").newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		logger.severe("Não foi possível determinar o dialeto do Hibernate");
 		return HibernateDialectResolver.dialect;
 	}
