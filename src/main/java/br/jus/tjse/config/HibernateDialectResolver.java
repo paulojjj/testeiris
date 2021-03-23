@@ -37,7 +37,7 @@ public class HibernateDialectResolver implements DialectResolver {
 		POSTGRES(PostgreSQL9Dialect.class, "POSTGRESQL"),
 		SQL_SERVER(SQLServer2012Dialect.class, "Microsoft SQL Server"),
 		//org.hibernate.dialect.InterSystemsIRISDialect
-		IRIS(Cache71Dialect.class, "IRIS"),
+		//IRIS(Cache71Dialect.class, "InterSystems IRIS"),
 		CACHE(new CacheDialectResolver());
 		
 		private DialectResolver dialectResolver;
@@ -150,7 +150,7 @@ public class HibernateDialectResolver implements DialectResolver {
 		@Override
 		public Dialect resolveDialect(DialectResolutionInfo info) {
 			String databaseName = info.getDatabaseName();
-			if(!databaseName.equals("Cache")) {
+			if(!databaseName.equals("Cache") && !databaseName.equals("InterSystems IRIS")) {
 				return null;
 			}
 			
@@ -196,13 +196,8 @@ public class HibernateDialectResolver implements DialectResolver {
 				return dialect;
 			}
 		}
-		try {
-			HibernateDialectResolver.dialect = (Dialect)Class.forName("br.jus.tjse.dialect.CacheDialect").newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 		logger.severe("Não foi possível determinar o dialeto do Hibernate");
-		return HibernateDialectResolver.dialect;
+		return null;
 	}
 
 }
